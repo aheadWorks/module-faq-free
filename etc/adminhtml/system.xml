@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="aheadworks" translate="label" sortOrder="110">
+            <label>Aheadworks Extensions</label>
+        </tab>
+        <section id="faq" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>FAQ Free</label>
+            <tab>aheadworks</tab>
+            <resource>Aheadworks_FaqFree::config_faq</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <frontend_model>Aheadworks\FaqFree\Block\Adminhtml\System\Config\FieldsetWithMessage</frontend_model>
+                <field id="faq_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FAQ name</label>
+                </field>
+                <field id="faq_route" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>FAQ route</label>
+                    <comment>E.g.: "faq" will make the FAQ accessible from http://mydomain.com/faq</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="groups_with_disabled_faq" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"  canRestore="1">
+                    <label>Who can view FAQ content</label>
+                    <source_model>Magento\Customer\Model\Customer\Source\Group</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="meta_title" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FAQ main page meta title</label>
+                </field>
+                <field id="meta_keywords" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FAQ main page meta keywords</label>
+                </field>
+                <field id="meta_description" translate="label" type="textarea" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FAQ main page meta description</label>
+                </field>
+                <field id="number_of_columns" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default number of columns on FAQ main page</label>
+                    <source_model>Aheadworks\FaqFree\Model\Source\Config\ColumnsCount</source_model>
+                </field>
+                <field id="faq_search_enabled" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable search in articles</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="faq_min_search_query_length" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Minimal Query Length</label>
+                    <validate>integer validate-greater-than-zero</validate>
+                </field>
+                <field id="faq_max_search_query_length" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum Query Length</label>
+                    <validate>integer validate-greater-than-zero</validate>
+                </field>
+                <field id="top_menu_link_enabled" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display link to FAQ in the top menu</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="navigation_menu_link_enabled" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display link to FAQ in the main navigation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="footer_menu_link_enabled" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display link to FAQ in the footer links</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fake_enable_ask_queston_form" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable "Ask a question" form on the article pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <frontend_model>Aheadworks\FaqFree\Block\Adminhtml\System\Config\NonEditableField</frontend_model>
+                </field>
+                <field id="enable_show_category_children" translate="label" type="select" sortOrder="10" showInDefault="1">
+                    <label>Show Subcategories and Articles on the Category page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fake_question_email" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email address for the questions from article pages</label>
+                    <depends>
+                        <field id="enable_ask_queston_form">1</field>
+                    </depends>
+                    <frontend_model>Aheadworks\FaqFree\Block\Adminhtml\System\Config\NonEditableField</frontend_model>
+                </field>
+            </group>
+            <group id="helpfulness" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Articles Helpfulness</label>
+                <field id="fake_helpfulness_customer_groups" translate="label" type="multiselect" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Who can view helpfulness</label>
+                    <source_model>Magento\Customer\Model\Customer\Source\Group</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <frontend_model>Aheadworks\FaqFree\Block\Adminhtml\System\Config\NonEditableField</frontend_model>
+                </field>
+                <field id="fake_helpfulness_rate_before_voting" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display helpfulness rate before voting</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <frontend_model>Aheadworks\FaqFree\Block\Adminhtml\System\Config\NonEditableField</frontend_model>
+                </field>
+                <field id="fake_helpfulness_rate_after_voting" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display helpfulness rate after voting</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <frontend_model>Aheadworks\FaqFree\Block\Adminhtml\System\Config\NonEditableField</frontend_model>
+                </field>
+            </group>
+            <group id="seo" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Search Engine Optimization</label>
+                <field id="article_url_suffix" translate="label" type="text" sortOrder="1"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Article URL suffix</label>
+                    <backend_model>Aheadworks\FaqFree\Model\Config\Backend\ArticleUrlSuffix</backend_model>
+                    <comment>Can consist of letters, numbers, slashes, underscores, dots and hyphens</comment>
+                </field>
+                <field id="category_url_suffix" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category URL Suffix</label>
+                    <backend_model>Aheadworks\FaqFree\Model\Config\Backend\CategoryUrlSuffix</backend_model>
+                    <comment>Can consist of letters, numbers, slashes, underscores, dots and hyphens</comment>
+                </field>
+                <field id="save_rewrites_history" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Create Permanent Redirect for URLs if URL Key Changed</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title_separator" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page Title Separator</label>
+                </field>
+                <field id="title_prefix" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Prefix</label>
+                </field>
+                <field id="title_suffix" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Suffix</label>
+                </field>
+                <field id="meta_title_suffix" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Meta Title Suffix For All Pages</label>
+                </field>
+                <field id="category_canonical_tag" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Canonical Link Meta Tag For Categories</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="article_canonical_tag" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Canonical Link Meta Tag For Articles</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

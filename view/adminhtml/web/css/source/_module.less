@@ -1,0 +1,56 @@
+@import 'components/_jstree';
+//
+//  Variables
+//  _____________________________________________
+
+@warning__color: @color-tomato-brick;
+
+.faq-article-edit,
+.faq-category-edit {
+    fieldset {
+        .admin__field {
+            .admin__field-control {
+                > .note._warning {
+                    color: @warning__color;
+                }
+            }
+        }
+    }
+}
+
+#disabled-element {
+    background: #8a837f;
+    cursor: default;
+
+    .tooltip {
+        .lib-tooltip(bottom);
+
+        position: inherit;
+
+        .tooltip-toggle {
+            border: 1px solid;
+            border-radius: 50px;
+            padding: 5px;
+            margin: 0px;
+            line-height: 1;
+            width: 25px;
+            text-align: center;
+            display: block;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .tooltip-content {
+            &:before,
+            &:after {
+                display: none;
+            }
+
+            left: 0px;
+            width: 100%;
+            text-align: center;
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+    }
+}

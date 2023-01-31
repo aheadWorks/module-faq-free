@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="awFaqArticles" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\FaqFree\Ui\DataProvider\Product\Form\Modifier\FaqArticles</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper">
+        <plugin name="aw-faq-product-initialize" type="Aheadworks\FaqFree\Plugin\Controller\Catalog\Adminhtml\Product\InitializationHelperPlugin" />
+    </type>
+
+    <type name="Magento\Config\Model\Config">
+        <plugin name="admin_system_faq_config_save_plugin" type="Aheadworks\FaqFree\Plugin\Config\Model\ConfigPlugin"/>
+    </type>
+
+</config>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">faq_category_form.category_form_data_source</item>
+            <item name="deps" xsi:type="string">faq_category_form.category_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Category Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">faq_Category_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Aheadworks\FaqFree\Block\Adminhtml\Category\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">Aheadworks\FaqFree\Block\Adminhtml\Category\Edit\DeleteButton</item>
+            <item name="save_and_continue" xsi:type="string">Aheadworks\FaqFree\Block\Adminhtml\Category\Edit\SaveAndContinue</item>
+            <item name="save" xsi:type="string">Aheadworks\FaqFree\Block\Adminhtml\Category\Edit\SaveButton</item>
+        </item>
+    </argument>
+    <dataSource name="category_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\FaqFree\Model\Category\DataProvider</argument>
+            <argument name="name" xsi:type="string">category_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">category_id</argument>
+            <argument name="requestFieldName" xsi:type="string">category_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="faq/category/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string"/>
+            </item>
+        </argument>
+        <field name="category_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                </item>
+            </argument>
+        </field>
+        <field name="parent_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">parent_id</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_enable">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Enable category</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Category name</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="url_key">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">URL key</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="store_ids">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\FaqFree\Ui\Component\Listing\Column\Faq\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Store view</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="sort_order">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Sort order</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="notice" xsi:type="string" translate="true">Categories with lower value will appear first</item>
+                </item>
+            </argument>
+        </field>
+        <field name="num_articles_to_display">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Number of articles to display on FAQ main page</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="default" xsi:type="string">5</item>
+                    <item name="notice" xsi:type="string" translate="true">0 or empty disables limitation</item>
+                </item>
+            </argument>
+        </field>
+        <field name="category_icon">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Category icon</item>
+                    <item name="src" xsi:type="string" translate="true"/>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="maxFileSize" xsi:type="number">2097152</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="faq/category/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="article_list_icon">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Article list icon</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="maxFileSize" xsi:type="number">2097152</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="faq/category/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <container name="is_show_children_group" component="Magento_Ui/js/form/components/group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Show Subcategories and Articles on the Category page</item>
+                </item>
+            </argument>
+            <field name="is_show_children">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="prefer" xsi:type="string">toggle</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="is_show_children_default">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Config Settings</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = is_show_children :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="content">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Content</item>
+            </item>
+        </argument>
+        <field name="content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" />
+                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="height" xsi:type="string">200px</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <item name="dataScope" xsi:type="string">content</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="seo">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">SEO</item>
+            </item>
+        </argument>
+        <field name="meta_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="component" xsi:type="string">Aheadworks_FaqFree/js/ui/form/element/input-charcount</item>
+                    <item name="elementTmpl" xsi:type="string">Aheadworks_FaqFree/ui/form/element/input-charcount</item>
+                    <item name="dataScope" xsi:type="string">meta_title</item>
+                    <item name="label" xsi:type="string" translate="true">Meta title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="additionalClasses" xsi:type="string">no-float</item>
+                    <item name="warningLevel" xsi:type="number">60</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="max_text_length" xsi:type="number">255</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="meta_keywords">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="component" xsi:type="string">Aheadworks_FaqFree/js/ui/form/element/input-charcount</item>
+                    <item name="elementTmpl" xsi:type="string">Aheadworks_FaqFree/ui/form/element/input-charcount</item>
+                    <item name="dataScope" xsi:type="string">meta_keywords</item>
+                    <item name="label" xsi:type="string" translate="true">Meta keywords</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="additionalClasses" xsi:type="string">no-float</item>
+                    <item name="warningLevel" xsi:type="number">160</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="max_text_length" xsi:type="number">255</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="meta_description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="component" xsi:type="string">Aheadworks_FaqFree/js/ui/form/element/input-charcount</item>
+                    <item name="elementTmpl" xsi:type="string">Aheadworks_FaqFree/ui/form/element/textarea-charcount</item>
+                    <item name="dataScope" xsi:type="string">meta_description</item>
+                    <item name="label" xsi:type="string" translate="true">Meta description</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="additionalClasses" xsi:type="string">no-float</item>
+                    <item name="warningLevel" xsi:type="number">160</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

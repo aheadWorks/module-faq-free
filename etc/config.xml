@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <faq>
+            <general>
+                <meta_title>FAQ</meta_title>
+                <faq_route>aw_faq</faq_route>
+                <faq_search_enabled>1</faq_search_enabled>
+                <faq_min_search_query_length>3</faq_min_search_query_length>
+                <faq_max_search_query_length>128</faq_max_search_query_length>
+                <footer_menu_link_enabled>1</footer_menu_link_enabled>
+                <navigation_menu_link_enabled>1</navigation_menu_link_enabled>
+                <top_menu_link_enabled>1</top_menu_link_enabled>
+                <enable_show_category_children>1</enable_show_category_children>
+            </general>
+            <seo>
+                <article_url_suffix>/</article_url_suffix>
+                <category_url_suffix>/</category_url_suffix>
+            </seo>
+        </faq>
+        <sitemap>
+            <aw_faq>
+                <priority>0.5</priority>
+                <changefreq>weekly</changefreq>
+            </aw_faq>
+        </sitemap>
+    </default>
+</config>

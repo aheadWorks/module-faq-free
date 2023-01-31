@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true" />
+
+        <referenceContainer name="content">
+            <block class="Aheadworks\FaqFree\Block\Category\CategoryList" name="aw_faq.name" template="Aheadworks_FaqFree::title.phtml" />
+
+            <block class="Aheadworks\FaqFree\Block\Search\Search"
+                   ifconfig="faq/general/faq_search_enabled"
+                   name="aw_faq.search"
+                   template="Aheadworks_FaqFree::search/search_field.phtml"
+                   after="aw_faq.name">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Search\SearchForm</argument>
+                </arguments>
+            </block>
+
+            <block class="Aheadworks\FaqFree\Block\Category\CategoryList" name="aw_faq.category_list" template="Aheadworks_FaqFree::category_list.phtml" />
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,20 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/* @var $block \Aheadworks\FaqFree\Block\Adminhtml\Category\Tree */
+?>
+<div class="categories-side-col">
+    <div class="sidebar-actions">
+        <?= $block->getAddRootButtonHtml() ?><br/>
+        <?= $block->getAddSubButtonHtml() ?>
+    </div>
+    <div class="tree-wrapper" data-mage-init='{"faqCategoryTree": <?= /* @escapeNotVerified */ $block->getConfig()?>}'>
+        <div class="tree-actions">
+            <a href="javascript:void(0);" class="collapse-tree-button"><?= /* @escapeNotVerified */ __('Collapse All') ?></a>
+            <span class="separator">|</span>
+            <a href="javascript:void(0);" class="expand-tree-button"><?= /* @escapeNotVerified */ __('Expand All') ?></a>
+        </div>
+
+        <div class="tree-init"></div>
+    </div>
+</div>

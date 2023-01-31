@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Aheadworks_FaqFree::css/tokenize.css"/>
+    </head>
+    <update handle="editor"/>
+    <update handle="faq_admin_default"/>
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="faq_article_form"/>
+        </referenceContainer>
+    </body>
+</page>

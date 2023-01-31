@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="faq" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\FaqFree\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">70</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="ArticleStructuredDataProvider" type="Aheadworks\FaqFree\Model\Article\StructuredData\CompositeProvider">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="base" xsi:type="object">Aheadworks\FaqFree\Model\Article\StructuredData\Provider\Base</item>
+                <item name="dates" xsi:type="object">Aheadworks\FaqFree\Model\Article\StructuredData\Provider\Dates</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Aheadworks\FaqFree\ViewModel\Article\StructuredData">
+        <arguments>
+            <argument name="dataProvider" xsi:type="object">ArticleStructuredDataProvider</argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\FaqFree\Controller\Index\Index">
+        <arguments>
+            <argument name="metadataProvider" xsi:type="object">Aheadworks\FaqFree\Model\Metadata\FaqIndexPage</argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\FaqFree\Controller\Article\Index">
+        <arguments>
+            <argument name="metadataProvider" xsi:type="object">Aheadworks\FaqFree\Model\Metadata\ArticlePage</argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\FaqFree\Controller\Category\Index">
+        <arguments>
+            <argument name="metadataProvider" xsi:type="object">Aheadworks\FaqFree\Model\Metadata\CategoryPage</argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\FaqFree\Controller\Router">
+        <arguments>
+            <argument name="routers" xsi:type="array">
+                <item name="category" xsi:type="object">Aheadworks\FaqFree\Controller\Router\Category</item>
+                <item name="article" xsi:type="object">Aheadworks\FaqFree\Controller\Router\Article</item>
+                <item name="search" xsi:type="object">Aheadworks\FaqFree\Controller\Router\Search</item>
+                <item name="tag" xsi:type="object">Aheadworks\FaqFree\Controller\Router\Tag</item>
+                <item name="index" xsi:type="object">Aheadworks\FaqFree\Controller\Router\Index</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="aw-faq-customer-data" type="Aheadworks\FaqFree\Plugin\CustomerData\CustomerPlugin" />
+    </type>
+
+</config>

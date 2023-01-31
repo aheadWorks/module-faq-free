@@ -1,0 +1,22 @@
+<?php
+/** @var \Aheadworks\FaqFree\Block\Link $block */
+?>
+
+<li id="aw_faq-menu-item"
+    data-bind="scope: 'customer'"
+    class = "level0 nav-0 category-item level-top ui-menu-item ui-corner-all">
+        <a data-bind="
+            style: {
+                display: customer().isFaqEnabled && customer().isNavigationMenuLinkEnabled ? 'inline-block' : 'none'
+            }"
+        class="level-top ui-corner-all aw-no-display"
+        href="<?= $block->escapeUrl($block->getHref()) ?>">
+            <?=  $block->escapeHtml($block->getFaqName()) ?>
+        </a>
+</li>
+
+<script>
+    require(['Magento_Customer/js/customer-data'], function(customerData) {
+        customerData.reload(['customer'])
+    });
+</script>

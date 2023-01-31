@@ -1,0 +1,27 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Aheadworks\FaqFree\Block\Product\ArticleListItem $block */
+/** @var \Aheadworks\FaqFree\ViewModel\Product\ArticleListItem $viewModel */
+$viewModel = $block->getViewModel();
+/** @var \Aheadworks\FaqFree\Api\Data\ArticleInterface $article */
+$article = $block->getArticle();
+$category = $viewModel->getArticleCategory($article);
+$articleUrl = $block->escapeUrl($viewModel->getArticleUrl($article));
+$categoryUrl = $block->escapeUrl($viewModel->getCategoryUrl($category));
+$articleTagsRenderer = $block->getArticleTagsRenderer( 'aw_faq_product_tab_article_tags', $article);
+?>
+
+<div class='aw-faq-product-article'>
+    <a class='aw-faq-product-article-link' href='<?= $articleUrl ?>'><?= $block->escapeHtml($article->getTitle()) ?></a>
+    <div class='aw-faq-product-article-info'>
+        <div class='column'>
+            <span>
+                <?= __('Categories:') ?>
+                <?php if ($category && $category->getIsEnable()) { ?>
+                    <a href='<?= $categoryUrl ?>'><?= $block->escapeHtml($category->getName()) ?></a>
+                <?php } ?>
+            </span>
+            <?= /* @noEscape */ $articleTagsRenderer ? $articleTagsRenderer->toHtml() : '' ?>
+        </div>
+    </div>
+</div>

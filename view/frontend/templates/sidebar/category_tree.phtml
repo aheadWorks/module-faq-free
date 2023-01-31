@@ -1,0 +1,13 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\FaqFree\ViewModel\CategoryTree\AbstractCategoryTree $viewModel */
+$viewModel = $block->getViewModel();
+?>
+
+<div class='aw-faq-sidebar-tree'
+    data-mage-init='{
+        "awFaqCategoryTree": {
+            "treeDataJson": <?= /* @noEscape */ $viewModel->getCategoryTreeJson() ?>
+    }}'>
+</div>

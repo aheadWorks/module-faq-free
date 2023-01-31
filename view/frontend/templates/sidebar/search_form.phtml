@@ -1,0 +1,16 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\FaqFree\Block\Search\Search */
+$formId = $block->getFormId();
+?>
+
+<div class="block-search aw-faq-sidebar-search">
+    <form id="<?= /* @noEscape */ $formId ?>">
+        <input type="text"
+               class="input-text aw-faq-sidebar-search-text-input"
+               placeholder="<?= $block->escapeHtml(__("Search Docs..."))?>"
+               name="<?= /* @noEscape */ $block->getQueryParamName() ?>"
+        />
+    </form>
+</div>

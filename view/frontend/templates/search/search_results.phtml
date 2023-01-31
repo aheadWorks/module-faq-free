@@ -1,0 +1,53 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var \Aheadworks\FaqFree\ViewModel\Search\SearchResults\AbstractSearchResults $viewModel */
+$viewModel = $block->getViewModel();
+$articles = $viewModel->getArticles();
+$categories = $viewModel->getCategories();
+?>
+
+<div class="search-results">
+    <div class="results-list article-list">
+        <?php if ($errorMessage = $viewModel->getErrorMessage()): ?>
+            <div class="message notice">
+                <div><?= $block->escapeHtml($errorMessage) ?></div>
+            </div>
+        <?php endif;?>
+        <?php if ($articles || $categories):?>
+            <h3><?= $block->escapeHtml(__(
+                    'Number of articles containing "%1": %2',
+                    [$block->escapeHtml($viewModel->getSearchQuery()), count($articles)]
+                )); ?>
+            </h3>
+            <ul class="aw-list-style">
+                <?php foreach($categories as $category): ?>
+                <?php $categoryTitle = $block->escapeHtml($category->getName());?>
+                    <li>
+                        <a href="<?= $block->escapeUrl($viewModel->getCategoryUrl($category)) ?>"
+                           title="<?= $block->escapeHtml(__('Go to %1', $block->escapeHtml($category->getName()))) ?>">
+                            <img class="icon" src="<?= /* @noEscape */ $block->getViewFileUrl('Aheadworks_FaqFree::images/category.svg') ?>">
+                            <?= /* @noEscape */ $viewModel->highlightSearchQueryWords($categoryTitle) ?>
+                        </a>
+                    </li>
+                <?php endforeach ?>
+                <?php foreach($articles as $article): ?>
+                    <li>
+                        <?php $articleTitle = $block->escapeHtml($article->getTitle()); ?>
+                        <a href="<?= $block->escapeUrl($viewModel->getArticleUrl($article)) ?>"
+                           title="<?= $block->escapeHtml(__('Go to %1', $block->escapeHtml($article->getTitle()))) ?>">
+                            <img class="icon" src="<?= /* @noEscape */ $block->getViewFileUrl('Aheadworks_FaqFree::images/article.svg') ?>">
+                            <?= /* @noEscape */ $viewModel->highlightSearchQueryWords($articleTitle) ?>
+                        </a>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        <?php else: ?>
+            <h3><?= $block->escapeHtml(__('No results found.')); ?></h3>
+            <div>
+                <?= /* @noEscape */ (__('Try searching something else or <a href="%1">go back</a> to previous page.', $viewModel->getBackUrl())); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+

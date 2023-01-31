@@ -1,0 +1,10 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var \Aheadworks\FaqFree\Block\Link $block */
+?>
+<li class = "nav item">
+    <a href="<?php echo $block->escapeUrl($block->getHref()); ?>">
+        <?php echo  $block->escapeHtml($block->getFaqName()); ?>
+    </a>
+</li>

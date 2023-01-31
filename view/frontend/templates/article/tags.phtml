@@ -1,0 +1,19 @@
+<?php
+/** @var Aheadworks\FaqFree\Block\AbstractArticleTags $block */
+/** @var \Aheadworks\FaqFree\ViewModel\Article\Tags $viewModel */
+$viewModel = $block->getViewModel();
+$items = $viewModel->getItems($block->getArticleId());
+?>
+<?php if ($items): ?>
+    <div class="aw-faq-tags-container">
+        <div class="aw-faq-tags-title"><?= /* @noEscape */ __('Tags:') ?></div>
+        <div class="aw-faq-tags-content">
+            <?php foreach ($items as $item): ?>
+                <a href="<?= /* @noEscape */ $viewModel->getSearchUrlByTag($item->getName()) ?>"
+                   class="aw-faq-tag">
+                    <?= /* @noEscape */ $item->getName() ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

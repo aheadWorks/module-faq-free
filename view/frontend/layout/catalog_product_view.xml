@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.details">
+            <block class="Aheadworks\FaqFree\Block\Product\ArticleList" name="aw_faq_product_tab_articles" group="detailed_info" template="Aheadworks_FaqFree::product/article_list.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Product\ArticleList</argument>
+                    <argument name="sort_order" xsi:type="string">1000</argument>
+                </arguments>
+
+                <block class="Aheadworks\FaqFree\Block\Product\ArticleListItem"
+                       name="aw_faq_product_tab_article_list_item_renderer"
+                       template="Aheadworks_FaqFree::product/article_list_item.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Product\ArticleListItem</argument>
+                    </arguments>
+
+                    <block class="Aheadworks\FaqFree\Block\Product\ArticleTags"
+                           name="aw_faq_product_tab_article_tags"
+                           template="Aheadworks_FaqFree::article/tags.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Article\Tags</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

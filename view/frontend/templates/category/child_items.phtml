@@ -1,0 +1,78 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\FaqFree\ViewModel\Category $viewModel */
+$viewModel = $block->getViewModel();
+
+/** @var \Aheadworks\FaqFree\Model\CategoryTree $categoryTree */
+$categoryTree = $viewModel->getCategoryTree();
+
+/** @var \Aheadworks\FaqFree\Model\Url $urlManager */
+$urlManager = $viewModel->getUrlManager();
+?>
+
+<section class='aw-faq-category-children'>
+
+    <ul class='aw-faq-category-children-list'>
+        <?php foreach ($categoryTree->getChildren() as $childTree) { ?>
+            <?php
+            $category = $childTree->getCategory();
+            $articles = $childTree->getArticles();
+            $articleListIconUrl = $block->escapeUrl($urlManager->getArticleListIconUrl($category));
+            $categoryIconUrl = $block->escapeUrl($urlManager->getCategoryIconUrl($category));
+            $categoryUrl = $block->escapeUrl($urlManager->getCategoryUrl($category));
+            $categoryName = $category->getName() ;
+            ?>
+            <li class='aw-faq-category-child-item <?= $articles ? "collapsible" : ""; ?>'>
+                <div data-role='title'>
+                    <span data-role='trigger' class='arrow'></span>
+                    <div  class='aw-faq-child-img-wrapper'>
+                        <img class='aw-faq-child-img' src='<?= $categoryIconUrl; ?>'>
+                    </div>
+                    <a class='aw-faq-child-url' href='<?= $categoryUrl; ?>'><?= $categoryName; ?></a>
+                </div>
+                <ul data-role='content' class='aw-faq-category-children-list'>
+                    <?php foreach ($articles as $article) { ?>
+                        <?php
+                        $articleUrl = $urlManager->getArticleUrl($article);
+                        $articleTitle = $article->getTitle();
+                        ?>
+                        <li class='aw-faq-category-child-item'>
+                            <div class='aw-faq-child-img-wrapper'>
+                                <img class='aw-faq-child-img' src='<?= $articleListIconUrl; ?>'>
+                            </div>
+                            <a class='aw-faq-child-url' href='<?= $articleUrl; ?>'><?= $articleTitle; ?></a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </li>
+        <?php } ?>
+    </ul>
+
+    <ul class='aw-faq-category-children-list'>
+        <?php foreach ($categoryTree->getArticles() as $article) { ?>
+            <?php
+            $articleListIconUrl = $block->escapeUrl($urlManager->getArticleListIconUrl($categoryTree->getCategory()));
+            $articleTitle = $article->getTitle();
+            $articleUrl = $urlManager->getArticleUrl($article);
+            ?>
+            <li class='aw-faq-category-child-item'>
+                <div class='aw-faq-child-img-wrapper'>
+                    <img class='aw-faq-child-img' src='<?= $articleListIconUrl; ?>'>
+                </div>
+                <a class='aw-faq-child-url' href='<?= $articleUrl; ?>'><?= $articleTitle; ?></a>
+            </li>
+        <?php } ?>
+    </ul>
+
+</section>
+
+
+<script>
+    require(['jquery', 'mage/collapsible'], function($) {
+        $('.aw-faq-category-children .collapsible').collapsible({
+            'openedState': 'active',
+            'active': false
+        });
+    });
+</script>

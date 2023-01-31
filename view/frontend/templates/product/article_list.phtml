@@ -1,0 +1,17 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Aheadworks\FaqFree\Block\Product\ArticleList $block */
+/** @var \Aheadworks\FaqFree\ViewModel\Product\ArticleList $viewModel */
+$viewModel = $block->getViewModel();
+
+/** @var \Aheadworks\FaqFree\Api\Data\ArticleInterface[] $articles */
+$articles = $viewModel->getCurrentProductArticles();
+?>
+
+<div class='aw-faq-product-articles-container'>
+    <span class='aw-faq-product-articles-title'><?= __('FAQ') ?></span>
+    <?php foreach ($articles as $article) { ?>
+        <?php $articleListItemRenderer = $block->getArticleListItemRenderer('aw_faq_product_tab_article_list_item_renderer', $article) ?>
+        <?= /* @noEscape */ $articleListItemRenderer ? $articleListItemRenderer->toHtml() : '' ?>
+    <?php } ?>
+</div>

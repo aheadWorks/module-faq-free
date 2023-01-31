@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true" />
+
+        <referenceContainer name="sidebar.main">
+            <container name="aw_faq.sidebar.content" htmlTag="div" htmlClass="aw-faq-sidebar-content aw-faq-sidebar-content-desktop">
+
+                <block class="Aheadworks\FaqFree\Block\Search\Search"
+                       ifconfig="faq/general/faq_search_enabled"
+                       name="aw_faq.sidebar.search"
+                       template="Aheadworks_FaqFree::sidebar/search_form.phtml">
+                    <arguments>
+                        <argument name="form_id" xsi:type="string">aw-faq-sidebar-search-form</argument>
+                    </arguments>
+                </block>
+
+                <block class="Aheadworks\FaqFree\Block\CategoryTree" name="aw_faq.sidebar.category_tree" template="Aheadworks_FaqFree::sidebar/category_tree.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\CategoryTree\CategoryPageCategoryTree</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="header.container">
+            <block name="aw_faq.sidebar.collapsible" template="Aheadworks_FaqFree::sidebar/sidebar_collapsible.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\CategoryTree\CategoryPageCategoryTree</argument>
+                </arguments>
+                <container name="aw_faq.sidebar.content.collapsible" htmlTag="div" htmlClass="aw-faq-sidebar-content aw-faq-sidebar-content-mobile">
+
+                    <block class="Aheadworks\FaqFree\Block\Search\Search"
+                           ifconfig="faq/general/faq_search_enabled"
+                           name="aw_faq.sidebar.search.collapsible"
+                           template="Aheadworks_FaqFree::sidebar/search_form.phtml">
+                        <arguments>
+                            <argument name="form_id" xsi:type="string">aw-faq-sidebar-search-form-mobile</argument>
+                        </arguments>
+                    </block>
+
+                    <block class="Aheadworks\FaqFree\Block\CategoryTree" name="aw_faq.sidebar.category_tree.collapsible" template="Aheadworks_FaqFree::sidebar/category_tree.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\CategoryTree\CategoryPageCategoryTree</argument>
+                        </arguments>
+                    </block>
+                </container>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="aw_faq.category.title" template="Aheadworks_FaqFree::category/title.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Category</argument>
+                </arguments>
+            </block>
+            <block class="Aheadworks\FaqFree\Block\Category\ChildItems" name="aw_faq.category.child_items" template="Aheadworks_FaqFree::category/child_items.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Category</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="aw_faq.category.content" template="Aheadworks_FaqFree::category/content.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\FaqFree\ViewModel\Category</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

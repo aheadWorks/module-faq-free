@@ -1,0 +1,21 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\FaqFree\ViewModel\Category\AbstractCategoryTree $viewModel */
+$viewModel = $block->getViewModel();
+?>
+
+<div class='aw-faq-sidebar-collapsible' data-mage-init='{
+    "collapsible": {
+        "openedState": "active",
+        "active": false,
+        "animate": {"duration":300, "easing":"easeOutCubic"}
+    }}'>
+    <button class='aw-faq-sidebar-collapsible-button' data-role='title'>
+        <?= $block->escapeHtml($viewModel->getPageTitle())?>
+    </button>
+    <div data-role='content'>
+        <?= $block->getChildHtml('aw_faq.sidebar.content.collapsible'); ?>
+    </div>
+</div>

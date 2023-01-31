@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Aheadworks_FaqFree::css/faq-page-menu.css"/>
+    </head>
+    <body>
+        <referenceContainer name="page.main.actions">
+            <block class="Aheadworks\FaqFree\Block\Adminhtml\Page\Menu" name="aw_faq_menu">
+                <block class="Aheadworks\FaqFree\Block\Adminhtml\Page\Menu\Item" name="aw_faq_menu_item.articles">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/article/index</argument>
+                        <argument name="label" xsi:type="string" translate="true">FAQ Articles</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_FaqFree::article</argument>
+                        <argument name="controller" xsi:type="string">article</argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\FaqFree\Block\Adminhtml\Page\Menu\Item" name="aw_faq_menu_item.categories">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/category/index</argument>
+                        <argument name="label" xsi:type="string" translate="true">FAQ Categories</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_FaqFree::category</argument>
+                        <argument name="controller" xsi:type="string">category</argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\FaqFree\Block\Adminhtml\Page\Menu\Item" name="aw_faq_menu_item.settings">
+                    <arguments>
+                        <argument name="path" xsi:type="string">adminhtml/system_config/edit/section/faq</argument>
+                        <argument name="label" xsi:type="string" translate="true">Settings</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_FaqFree::config_faq</argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\FaqFree\Block\Adminhtml\Page\Menu\Item" name="aw_faq_menu_item.readme">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Readme</argument>
+                        <argument name="link_attributes" xsi:type="array">
+                            <item name="href" xsi:type="string">https://aheadworks.com/resources/faq/user-manual-faq</item>
+                            <item name="target" xsi:type="string">_blank</item>
+                            <item name="class" xsi:type="string">separator</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\FaqFree\Block\Adminhtml\Page\Menu\Item" name="aw_faq_menu_item.support">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Get Support</argument>
+                        <argument name="link_attributes" xsi:type="array">
+                            <item name="href" xsi:type="string">https://aheadworks.com/contact</item>
+                            <item name="target" xsi:type="string">_blank</item>
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

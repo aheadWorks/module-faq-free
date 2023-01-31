@@ -1,0 +1,11 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var \Aheadworks\FaqFree\ViewModel\Article\StructuredData $viewModel */
+$viewModel = $block->getViewModel();
+?>
+
+<script type="application/ld+json">
+    <?= /* @noEscape */ $viewModel->getStructuredDataForCurrentArticle(); ?>
+</script>

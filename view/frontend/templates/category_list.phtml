@@ -1,0 +1,77 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var \Aheadworks\FaqFree\Block\Category\CategoryList $block */
+?>
+<div class="aw-container <?php /* @noEscape */ echo $block->getDefaultNumberOfColumnsToDisplay() == 1 ? 'columns-to-center' : ''; ?>">
+<?php /** @var \Aheadworks\FaqFree\Model\Category $category */ ?>
+<?php foreach ($block->getCategories() as $category): ?>
+    <?php
+        $categoryArticles = $block->getCategoryArticles($category);
+        $moreArticlesNumber = $block->getMoreArticlesNumber($category->getId());
+        $articleListIcon = $category->getArticleListIcon()
+            ? 'class="image-item" style="background:url(' . $block->escapeUrl($block->getArticleListIconUrl($category)) . ')"'
+            : '';
+    ?>
+    <div class="aw-column">
+        <section class="article-list">
+            <h3 class="category-name">
+                <?php if ($block->getCategoryIconUrl($category)) :?>
+                    <img class="category-icon" src="<?php echo $block->escapeUrl($block->getCategoryIconUrl($category)); ?>" alt="<?php echo $block->escapeHtml($category->getName()); ?>" />
+                <?php endif; ?>
+                <a href="<?php echo $block->escapeUrl($block->getCategoryUrl($category)); ?>"><?php echo $block->escapeHtml($category->getName()); ?></a>
+            </h3>
+            <ul <?php echo $articleListIcon ? '' : 'class="aw-list-style"'; ?>>
+                <?php foreach ($block->getCategories($category->getCategoryId()) as $childCategory):
+                    $childCategoryArticles = $block->getCategoryArticles($childCategory);
+                    $childCategoryIcon = $articleListIcon && $block->getCategoryIconUrl($childCategory)
+                        ? 'class="image-item" style="background:url(' . $block->escapeUrl($block->getCategoryIconUrl($childCategory)) . ')"'
+                        : $articleListIcon; ?>
+                    <li <?php /* @noEscape */ echo $childCategoryIcon ?> >
+                        <div class="aw-subcategory">
+                            <a href="<?php echo $block->escapeUrl($block->getCategoryUrl($childCategory)); ?>">
+                                <?php echo $block->escapeHtml($childCategory->getName()); ?>
+                            </a>
+                            <?php if ($childCategoryArticles): ?>
+                                <i class="arrow down"></i>
+                            <?php endif; ?>
+                        </div>
+                        <ul class="aw-subcategory-list<?php /* @noEscape */ echo $childCategoryIcon ? '' : ' add-margin'?>">
+                            <?php foreach ($childCategoryArticles as $article): ?>
+                                <li>
+                                    <a href="<?php echo $block->escapeUrl($block->getArticleUrl($article)); ?>"><?php echo  $block->escapeHtml($article->getTitle()); ?></a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php endforeach; ?>
+
+                <?php foreach ($categoryArticles as $article): ?>
+                    <li <?php /* @noEscape */ echo $articleListIcon ?> >
+                        <a href="<?php echo $block->escapeUrl($block->getArticleUrl($article)); ?>"><?php echo  $block->escapeHtml($article->getTitle()); ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php if ($category->getNumArticlesToDisplay() && $moreArticlesNumber > 0):?>
+                <a href="<?php echo $block->escapeUrl($block->getCategoryUrl($category)); ?>" class="more-articles-link"><i><?php echo $block->escapeHtml(__('Read %1 more article(s)', $moreArticlesNumber)) ?></i></a>
+            <?php endif; ?>
+        </section>
+    </div>
+<?php endforeach ?>
+    <script>
+        require(['jquery'],function($){
+            jQuery('.aw-subcategory').on('click', function(e) {
+                var category = e.currentTarget,
+                    articleList = category.nextElementSibling,
+                    arrow = category.lastElementChild;
+                if (articleList.style.display === 'none') {
+                    articleList.style.display = 'block';
+                    arrow.classList.replace('down', 'up')
+                } else {
+                    articleList.style.display = 'none';
+                    arrow.classList.replace('up', 'down')
+                }
+            });
+        });
+    </script>
+</div>

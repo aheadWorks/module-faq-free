@@ -1,0 +1,8 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\FaqFree\ViewModel\Category $viewModel */
+$viewModel = $block->getViewModel();
+?>
+
+<h1><?= $block->escapeHtml($viewModel->getTitle()); ?></h1>

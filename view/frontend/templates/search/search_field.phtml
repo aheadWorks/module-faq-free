@@ -1,0 +1,39 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var $block \Aheadworks\FaqFree\Block\Search\Search */
+/** @var \Aheadworks\FaqFree\ViewModel\Search\SearchForm $viewModel */
+$viewModel = $block->getViewModel();
+$minSearchQueryLength = $viewModel->getMinSearchQueryLength();
+$maxSearchQueryLength = $viewModel->getMaxSearchQueryLength();
+?>
+<?php $searchQuery = $block->getSearchQueryString(); ?>
+
+<div class="aw-faq-search">
+    <form action="<?php echo $block->escapeUrl($block->getFaqSearchUrl()) ?>"
+          method="get"
+          role="search"
+          id="aw-faq-search-form"
+    >
+        <div class="aw-search-field">
+            <div class="control">
+                <input id="aw-faq-search-field" type="text"
+                       placeholder="<?php echo $block->escapeHtml(__('Type here to search FAQ articles')); ?>"
+                       class="input-text"
+                       name="<?php /* @noEscape */ echo $block->getQueryParamName() ?>"
+                       role="combobox"
+                       aria-required="true"
+                       required
+                       value="<?php echo $block->escapeHtml($searchQuery) ?>"
+                        <?= $minSearchQueryLength ? "minlength=" . $block->escapeHtmlAttr($minSearchQueryLength) : "" ?>
+                        <?= $maxSearchQueryLength ? "maxlength=" . $block->escapeHtmlAttr($maxSearchQueryLength) : "" ?>
+                       data-mage-init='{"awFaqSearchField": {"formSelector": "#aw-faq-search-form"}}'
+                />
+                <input type="hidden" name="routeName" value="<?php echo $block->escapeHtml($block->getRouteName()) ?>" />
+                <div id="search_autocomplete" class="search-autocomplete"></div>
+            </div>
+        </div>
+        <button type="submit" title="<?php echo  $block->escapeHtml(__('Search')); ?>" class="action primary" >
+            <span><?php echo  $block->escapeHtml(__('Search')); ?></span>
+        </button>
+    </form>
+</div>

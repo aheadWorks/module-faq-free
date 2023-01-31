@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="aw_faq_category" resource="default" engine="innodb" comment="Aheadworks Faq Category">
+        <column xsi:type="int" name="category_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Category ID"/>
+        <column xsi:type="varchar" name="url_key" nullable="false" length="255" comment="Category URL-Key"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Category name"/>
+        <column xsi:type="longtext" name="content" nullable="true" comment="Category Content"/>
+        <column xsi:type="int" name="parent_id" padding="10" unsigned="true" nullable="true" identity="false"
+                default="0" comment="Parent ID"/>
+        <column xsi:type="varchar" name="path" nullable="true" length="255" comment="Path"/>
+        <column xsi:type="text" name="meta_title" nullable="true" comment="Category Meta title"/>
+        <column xsi:type="varchar" name="meta_keywords" nullable="true" length="255" comment="Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Category Meta description"/>
+        <column xsi:type="smallint" name="sort_order" padding="6" unsigned="false" nullable="true" identity="false"
+                comment="Order of displaying category on frontend"/>
+        <column xsi:type="smallint" name="num_articles_to_display" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Number of articles to display on frontend"/>
+        <column xsi:type="text" name="category_icon" nullable="true" comment="Category image icon"/>
+        <column xsi:type="text" name="article_list_icon" nullable="true" comment="Article List Icon"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Category Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Category Update Time"/>
+        <column xsi:type="smallint" name="is_enable" padding="6" unsigned="false" nullable="false" identity="false"
+                default="1" comment="Is Category Enable"/>
+        <column xsi:type="smallint" name="is_show_children" padding="6" unsigned="false" nullable="false"
+                identity="false" default="1" comment="Is Show Children"/>
+        <column xsi:type="smallint" name="is_show_children_default" padding="6" unsigned="false" nullable="false"
+                identity="false" default="1" comment="Is Show Children Use Default"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="category_id"/>
+        </constraint>
+        <index referenceId="AW_FAQ_CATEGORY_NAME" indexType="fulltext">
+            <column name="name"/>
+        </index>
+        <index referenceId="AW_FAQ_CATEGORY_PATH" indexType="btree">
+            <column name="path"/>
+        </index>
+    </table>
+    <table name="aw_faq_article" resource="default" engine="innodb" comment="Aheadworks Faq Article">
+        <column xsi:type="int" name="article_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Article ID"/>
+        <column xsi:type="varchar" name="url_key" nullable="false" length="255" comment="Article URL-Key"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Article title"/>
+        <column xsi:type="text" name="meta_title" nullable="true" comment="Article Meta title"/>
+        <column xsi:type="varchar" name="meta_keywords" nullable="true" length="255" comment="Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Article Meta description"/>
+        <column xsi:type="longtext" name="content" nullable="true" comment="Article Content"/>
+        <column xsi:type="smallint" name="sort_order" padding="6" unsigned="false" nullable="true" identity="false"
+                comment="Order of displaying article on frontend"/>
+        <column xsi:type="int" name="views_count" padding="11" unsigned="false" nullable="true" identity="false"
+                comment="Number of article views"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Article Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Article Update Time"/>
+        <column xsi:type="smallint" name="is_enable" padding="6" unsigned="false" nullable="false" identity="false"
+                default="1" comment="Is Article Enable"/>
+        <column xsi:type="int" name="category_id" padding="11" unsigned="false" nullable="true" identity="false"
+                comment="Category ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="article_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_ARTICLE_CATEGORY_ID_AW_FAQ_CATEGORY_CATEGORY_ID"
+                    table="aw_faq_article" column="category_id" referenceTable="aw_faq_category"
+                    referenceColumn="category_id" onDelete="SET NULL"/>
+        <index referenceId="AW_FAQ_ARTICLE_TITLE_CONTENT" indexType="fulltext">
+            <column name="title"/>
+            <column name="content"/>
+        </index>
+    </table>
+    <table name="aw_faq_category_store" resource="default" engine="innodb"
+           comment="Aheadworks FAQ Category To Store Linkage Table">
+        <column xsi:type="int" name="category_id" padding="11" unsigned="false" nullable="false" identity="false"
+                comment="Category ID"/>
+        <column xsi:type="smallint" name="store_ids" padding="5" unsigned="true" nullable="false" identity="false"
+                comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="category_id"/>
+            <column name="store_ids"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_CATEGORY_STORE_CATEGORY_ID_AW_FAQ_CATEGORY_CATEGORY_ID"
+                    table="aw_faq_category_store" column="category_id" referenceTable="aw_faq_category"
+                    referenceColumn="category_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_CATEGORY_STORE_STORE_IDS_STORE_STORE_ID"
+                    table="aw_faq_category_store" column="store_ids" referenceTable="store" referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="AW_FAQ_CATEGORY_STORE_STORE_IDS" indexType="btree">
+            <column name="store_ids"/>
+        </index>
+    </table>
+    <table name="aw_faq_article_store" resource="default" engine="innodb"
+           comment="Aheadworks FAQ Article To Store Linkage Table">
+        <column xsi:type="int" name="article_id" padding="11" unsigned="false" nullable="false" identity="false"
+                comment="Article ID"/>
+        <column xsi:type="smallint" name="store_ids" padding="5" unsigned="true" nullable="false" identity="false"
+                comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="article_id"/>
+            <column name="store_ids"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_ARTICLE_STORE_ARTICLE_ID_AW_FAQ_ARTICLE_ARTICLE_ID"
+                    table="aw_faq_article_store" column="article_id" referenceTable="aw_faq_article"
+                    referenceColumn="article_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_ARTICLE_STORE_STORE_IDS_STORE_STORE_ID"
+                    table="aw_faq_article_store" column="store_ids" referenceTable="store" referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="AW_FAQ_ARTICLE_STORE_STORE_IDS" indexType="btree">
+            <column name="store_ids"/>
+        </index>
+    </table>
+    <table name="aw_faq_tag" resource="default" engine="innodb" comment="FAQ Tag">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Tag Id"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Name"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="AW_FAQ_TAG_NAME" indexType="fulltext">
+            <column name="name"/>
+        </index>
+    </table>
+    <table name="aw_faq_article_tag" resource="default" engine="innodb" comment="FAQ Article Tag">
+        <column xsi:type="int" name="tag_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Tag Id"/>
+        <column xsi:type="int" name="article_id" padding="11" unsigned="false" nullable="false" identity="false"
+                comment="Article Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="tag_id"/>
+            <column name="article_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_ARTICLE_TAG_TAG_ID_AW_FAQ_TAG_ID" table="aw_faq_article_tag"
+                    column="tag_id" referenceTable="aw_faq_tag" referenceColumn="id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_ARTICLE_TAG_ARTICLE_ID_AW_FAQ_ARTICLE_ARTICLE_ID"
+                    table="aw_faq_article_tag" column="article_id" referenceTable="aw_faq_article"
+                    referenceColumn="article_id" onDelete="CASCADE"/>
+        <index referenceId="AW_FAQ_TAG_TAG_ID" indexType="btree">
+            <column name="tag_id"/>
+        </index>
+        <index referenceId="AW_FAQ_ARTICLE_ARTICLE_ID" indexType="btree">
+            <column name="article_id"/>
+        </index>
+    </table>
+    <table name="aw_faq_product_article" resource="default" engine="innodb" comment="Product FAQ Articles">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Product Id"/>
+        <column xsi:type="int" name="article_id" padding="11" unsigned="false" nullable="false" identity="false"
+                comment="Article ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_PRD_ARTICLE_PRD_ID_CAT_PRD_ENTT_ENTT_ID"
+                    table="aw_faq_product_article" column="product_id" referenceTable="catalog_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="AW_FAQ_PRODUCT_ARTICLE_ARTICLE_ID_AW_FAQ_ARTICLE_ARTICLE_ID"
+                    table="aw_faq_product_article" column="article_id" referenceTable="aw_faq_article"
+                    referenceColumn="article_id" onDelete="CASCADE"/>
+    </table>
+</schema>
