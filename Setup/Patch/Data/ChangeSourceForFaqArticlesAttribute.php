@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Aheadworks\FaqFree\Setup\Patch\Data;
 
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -15,29 +17,19 @@ class ChangeSourceForFaqArticlesAttribute implements
     PatchRevertableInterface
 {
     /**
-     * @var ModuleDataSetupInterface $moduleDataSetup
-     */
-    private $moduleDataSetup;
-
-    /**
-     * @var EavSetupFactory
-     */
-    private $eavSetupFactory;
-
-    /**
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory $eavSetupFactory
      */
     public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup,
-        EavSetupFactory $eavSetupFactory
+        private readonly ModuleDataSetupInterface $moduleDataSetup,
+        private readonly EavSetupFactory $eavSetupFactory
     ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
     }
 
     /**
      * Update 'aw_faq_articles' product attribute
+     *
+     * @return self
      */
     public function apply()
     {
@@ -49,6 +41,8 @@ class ChangeSourceForFaqArticlesAttribute implements
             'source_model',
             ArticlesProxy::class
         );
+
+        return $this;
     }
 
     /**

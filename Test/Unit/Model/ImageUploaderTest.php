@@ -4,7 +4,6 @@ namespace Aheadworks\FaqFree\Test\Unit\Model;
 
 use Aheadworks\FaqFree\Model\ImageUploader;
 use Magento\Framework\Exception\FileSystemException;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\Write as DirectoryWrite;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;

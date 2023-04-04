@@ -10,29 +10,19 @@ use Psr\Log\LoggerInterface;
 class SetFlagModuleWasInstalled implements DataPatchInterface
 {
     /**
-     * @var Flag $flag
-     */
-    private $flag;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param LoggerInterface $logger
      * @param Flag $flag
      */
     public function __construct(
-        LoggerInterface $logger,
-        Flag $flag
+        private readonly LoggerInterface $logger,
+        private readonly Flag $flag
     ) {
-        $this->logger = $logger;
-        $this->flag = $flag;
     }
 
     /**
      * Set flag that module was installed
+     *
+     * @return self
      */
     public function apply()
     {
@@ -46,6 +36,8 @@ class SetFlagModuleWasInstalled implements DataPatchInterface
         } catch (\Exception $e) {
             $this->logger->critical($e);
         }
+
+        return $this;
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Aheadworks\FaqFree\Model\ResourceModel\Category\Grid;
 
@@ -89,11 +90,14 @@ class Collection extends CategoryCollection implements SearchResultInterface
     /**
      * Set aggregations
      *
-     * @param \Magento\Framework\Api\Search\AggregationInterface $aggregations
+     * @param AggregationInterface $aggregations
+     * @return self
      */
     public function setAggregations($aggregations)
     {
         $this->aggregations = $aggregations;
+
+        return $this;
     }
 
     /**

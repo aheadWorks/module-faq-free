@@ -1,7 +1,6 @@
 <?php
 namespace Aheadworks\FaqFree\Model\Config;
 
-use Aheadworks\FaqFree\Model\Config\Backend\Route;
 use Magento\Framework\DataObject;
 
 class FaqRoute
@@ -10,6 +9,11 @@ class FaqRoute
      * Path to current FAQ route
      */
     private const FAQ_ROUTE_PATH = 'groups/general/fields/faq_route';
+
+    /**
+     * Default faq url for url rewrites. Get from etc/config.xml
+     */
+    public const DEFAULT_FAQ_ROUTE = 'aw_faq';
 
     /**
      * Retrieve current Faq route
@@ -22,7 +26,7 @@ class FaqRoute
         $faqUrlPathParts = explode('/', self::FAQ_ROUTE_PATH);
         $faqUrlData = $this->getDataByPathParts($data, $faqUrlPathParts);
 
-        return !empty($faqUrlData['inherit']) ? Route::DEFAULT_FAQ_ROUTE : $faqUrlData['value'];
+        return !empty($faqUrlData['inherit']) ? self::DEFAULT_FAQ_ROUTE : $faqUrlData['value'];
     }
 
     /**

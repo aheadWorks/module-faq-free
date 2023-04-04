@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace Aheadworks\FaqFree\Setup\Patch\Data;
 
 use Aheadworks\FaqFree\Api\Data\ProductAttributeInterface;
 use Aheadworks\FaqFree\Model\Source\Product\Attribute\Articles;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
@@ -14,28 +17,21 @@ use Magento\Catalog\Model\Product;
 class InstallProductArticlesAttribute implements DataPatchInterface, PatchRevertableInterface, PatchVersionInterface
 {
     /**
-     * @var ModuleDataSetupInterface $moduleDataSetup
-     */
-    private $moduleDataSetup;
-
-    /**
-     * @var EavSetupFactory
-     */
-    private $eavSetupFactory;
-    /**
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory $eavSetupFactory
      */
     public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup,
-        EavSetupFactory $eavSetupFactory
+        private readonly ModuleDataSetupInterface $moduleDataSetup,
+        private readonly EavSetupFactory $eavSetupFactory
     ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
     }
 
     /**
      * Create product articles attribute
+     *
+     * @return self
+     * @throws LocalizedException
+     * @throws \Zend_Validate_Exception
      */
     public function apply()
     {
@@ -70,6 +66,8 @@ class InstallProductArticlesAttribute implements DataPatchInterface, PatchRevert
                 'apply_to' => ''
             ]
         );
+
+        return $this;
     }
 
     /**
