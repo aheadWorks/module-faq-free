@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Aheadworks\FaqFree\Model;
 
+use Magento\Framework\Exception\FileSystemException;
 use Magento\MediaStorage\Helper\File\Storage\Database;
 use Magento\MediaStorage\Model\File\Uploader;
 use Magento\MediaStorage\Model\File\UploaderFactory;
@@ -21,29 +23,9 @@ class ImageUploader
     public const FAQ_PATH = 'faq';
 
     /**
-     * @var Database
-     */
-    private $coreFileStorageDatabase;
-
-    /**
-     * @var UploaderFactory
-     */
-    private $uploaderFactory;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @var string
      */
-    private $tmpPath;
+    private string $tmpPath;
 
     /**
      * @param Database $coreFileStorageDatabase
@@ -53,17 +35,12 @@ class ImageUploader
      * @param LoggerInterface $logger
      */
     public function __construct(
-        Database $coreFileStorageDatabase,
-        UploaderFactory $uploaderFactory,
-        Filesystem $filesystem,
-        StoreManagerInterface $storeManager,
-        LoggerInterface $logger
+        private readonly Database $coreFileStorageDatabase,
+        private readonly UploaderFactory $uploaderFactory,
+        private readonly Filesystem $filesystem,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly LoggerInterface $logger
     ) {
-        $this->coreFileStorageDatabase = $coreFileStorageDatabase;
-        $this->uploaderFactory = $uploaderFactory;
-        $this->filesystem = $filesystem;
-        $this->storeManager = $storeManager;
-        $this->logger = $logger;
         $this->tmpPath = DirectoryList::TMP . '/' . self::FAQ_PATH;
     }
 
@@ -71,6 +48,7 @@ class ImageUploader
      * Return Media Directory path
      *
      * @return DirectoryWrite
+     * @throws FileSystemException
      */
     private function getMediaDirectory()
     {
