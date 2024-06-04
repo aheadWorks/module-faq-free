@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Aheadworks\FaqFree\Block\Article;
 
 use Magento\Cms\Model\Template\FilterProvider;
@@ -7,56 +9,60 @@ use Magento\Backend\Block\Widget\Context;
 use Aheadworks\FaqFree\Api\ArticleRepositoryInterface;
 use Aheadworks\FaqFree\Api\Data\ArticleInterface;
 use Magento\Framework\DataObject\IdentityInterface;
+use Aheadworks\FaqFree\Model\ResourceModel\Article as Articles;
 
 class Article extends Template implements IdentityInterface
 {
     /**
-     * @var ArticleRepositoryInterface
-     */
-    private $articleRepository;
-
-    /**
-     * @var FilterProvider
-     */
-    private $filterProvider;
-
-    /**
+     * Article Construct
+     *
      * @param Context $context
      * @param ArticleRepositoryInterface $articleRepository
      * @param FilterProvider $filterProvider
+     * @param Articles $articles
      * @param array $data
      */
     public function __construct(
         Context $context,
-        ArticleRepositoryInterface $articleRepository,
-        FilterProvider $filterProvider,
+        private readonly ArticleRepositoryInterface $articleRepository,
+        private readonly FilterProvider $filterProvider,
+        private readonly Articles $articles,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->articleRepository = $articleRepository;
-        $this->filterProvider = $filterProvider;
     }
-    
+
     /**
      * Retrieve article instance
      *
-     * @return ArticleInterface
+     * @return null | ArticleInterface
      */
     public function getArticle()
     {
         $articleId = $this->getRequest()->getParam('id');
 
-        return $this->articleRepository->getById($articleId);
+        if (!$articleId) {
+            $path = $this->getRequest()->getOriginalPathInfo();
+            $urlKey = ltrim(strrchr((trim($path, '/')), '/'), '/');
+            $articleId = $this->articles->getIdByUrlKey($urlKey);
+        }
+        if ($articleId) {
+            return $this->articleRepository->getById($articleId);
+        }
+        return null;
     }
 
     /**
      * Retrieve article title
      *
-     * @return string
+     * @return null | string
      */
     public function getTitle()
     {
-        return $this->getArticle()->getTitle();
+        if ($this->getArticle()) {
+            return $this->getArticle()->getTitle();
+        }
+        return null;
     }
 
     /**
@@ -76,6 +82,11 @@ class Article extends Template implements IdentityInterface
      */
     public function getIdentities()
     {
-        return $this->getArticle()->getIdentities();
+        $identities = [];
+        if ($this->getArticle()) {
+            return $identities = $this->getArticle()->getIdentities();
+        } else {
+            return $identities;
+        }
     }
 }
