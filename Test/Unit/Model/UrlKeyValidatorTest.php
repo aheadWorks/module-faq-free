@@ -174,7 +174,7 @@ class UrlKeyValidatorTest extends TestCase
             ->willReturn($tableName);
 
         $this->resourceConnectionMock
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('getTableName')
             ->with($tableName)
             ->willReturn($tableName);
