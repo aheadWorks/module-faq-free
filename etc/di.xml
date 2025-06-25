@@ -7,7 +7,6 @@
     <preference for="Aheadworks\FaqFree\Api\CategoryRepositoryInterface" type="Aheadworks\FaqFree\Model\CategoryRepository" />
     <preference for="Aheadworks\FaqFree\Api\ArticleRepositoryInterface" type="Aheadworks\FaqFree\Model\ArticleRepository" />
     <preference for="Aheadworks\FaqFree\Api\SearchManagementInterface" type="Aheadworks\FaqFree\Model\Search" />
-    <preference for="Aheadworks\FaqFree\Model\UrlRewrite\MetadataInterface" type="Aheadworks\FaqFree\Model\UrlRewrite\Metadata" />
     <preference for="Aheadworks\FaqFree\Api\Data\TagInterface" type="Aheadworks\FaqFree\Model\Tag" />
     <preference for="Aheadworks\FaqFree\Api\TagRepositoryInterface" type="Aheadworks\FaqFree\Model\TagRepository" />
     <preference for="Aheadworks\FaqFree\Api\Data\TagSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />

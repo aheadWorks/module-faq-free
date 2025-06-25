@@ -405,14 +405,12 @@ class CategoryRepositoryTest extends TestCase
             ->willReturn(sizeof($categoryArray));
 
         $this->categoryCollectionMock
-            ->expects($this->at(1))
+            ->expects($this->exactly(2))
             ->method('fetchItem')
-            ->willReturn($this->categoryMock);
-
-        $this->categoryCollectionMock
-            ->expects($this->at(2))
-            ->method('fetchItem')
-            ->willReturn(null);
+            ->willReturnOnConsecutiveCalls(
+                $this->categoryMock,
+                null
+            );
 
         $this->categoryConverterMock
             ->expects($this->any())

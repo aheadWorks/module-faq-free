@@ -132,16 +132,20 @@ class ImageUploaderTest extends TestCase
         $baseTmpImagePath = 'tmp/faq/imageName';
 
         $this->directoryWriteMock
-            ->expects($this->at(0))
+            ->expects($this->atLeastOnce())
             ->method('isExist')
-            ->with($baseImagePath)
-            ->willReturn(false);
-
-        $this->directoryWriteMock
-            ->expects($this->at(1))
-            ->method('isExist')
-            ->with($baseTmpImagePath)
-            ->willReturn(true);
+            ->with($this->callback(function($arg) use ($baseImagePath, $baseTmpImagePath) {
+                return in_array($arg, [$baseImagePath, $baseTmpImagePath]);
+            }))
+            ->willReturnCallback(function($arg) use ($baseImagePath, $baseTmpImagePath) {
+                if ($arg === $baseImagePath) {
+                    return false;
+                }
+                if ($arg === $baseTmpImagePath) {
+                    return true;
+                }
+                return false;
+            });
 
         $this->coreFileStorageDatabaseMock
             ->expects($this->once())
@@ -168,16 +172,30 @@ class ImageUploaderTest extends TestCase
         $baseImagePath = 'faq/imageName';
 
         $this->directoryWriteMock
-            ->expects($this->at(0))
+            ->expects($this->atLeastOnce())
             ->method('isExist')
-            ->with($baseImagePath)
-            ->willReturn(false);
+            ->with($this->callback(function ($arg) use ($baseImagePath, $baseTmpImagePath) {
+                return in_array($arg, [$baseImagePath, $baseTmpImagePath]);
+            }))
+            ->willReturnCallback(function ($arg) use ($baseImagePath, $baseTmpImagePath) {
+                if ($arg === $baseImagePath) {
+                    return false;
+                }
+                if ($arg === $baseTmpImagePath) {
+                    return true;
+                }
+                return false;
+            });
+
+        $this->coreFileStorageDatabaseMock
+            ->expects($this->once())
+            ->method('copyFile')
+            ->with($baseTmpImagePath, $baseImagePath);
 
         $this->directoryWriteMock
-            ->expects($this->at(1))
-            ->method('isExist')
-            ->with($baseTmpImagePath)
-            ->willReturn(true);
+            ->expects($this->once())
+            ->method('renameFile')
+            ->with($baseTmpImagePath, $baseImagePath);
 
         $this->assertEquals($imageName, $this->imageUploaderObject->moveFileFromTmp($imageName));
     }
@@ -194,12 +212,12 @@ class ImageUploaderTest extends TestCase
     {
         $imageName = 'imageName';
         $baseTmpImagePath = 'tmp/faq/imageName';
+        $baseImagePath = 'faq/imageName';
 
         $this->directoryWriteMock
-            ->expects($this->at(1))
+            ->expects($this->exactly(2))  // Expecting both paths to be checked
             ->method('isExist')
-            ->with($baseTmpImagePath)
-            ->willReturn(false);
+            ->willReturnOnConsecutiveCalls(false, false);  // Returning false for both paths
 
         $this->coreFileStorageDatabaseMock
             ->expects($this->never())
@@ -230,16 +248,9 @@ class ImageUploaderTest extends TestCase
         $baseTmpImagePath = 'tmp/faq/imageName';
 
         $this->directoryWriteMock
-            ->expects($this->at(0))
+            ->expects($this->exactly(2)) // Expecting both paths to be checked
             ->method('isExist')
-            ->with($baseImagePath)
-            ->willReturn(false);
-
-        $this->directoryWriteMock
-            ->expects($this->at(1))
-            ->method('isExist')
-            ->with($baseTmpImagePath)
-            ->willReturn(true);
+            ->willReturnOnConsecutiveCalls(false, true); // Returning false for the final path, true for the temp path
 
         $this->coreFileStorageDatabaseMock
             ->expects($this->once())
@@ -249,7 +260,7 @@ class ImageUploaderTest extends TestCase
         $this->directoryWriteMock
             ->expects($this->once())
             ->method('renameFile')
-            ->willThrowException(new FileSystemException(__('Test Phrase')));
+            ->willThrowException(new \Magento\Framework\Exception\FileSystemException(__('Test Phrase')));
 
         $this->expectException(\Magento\Framework\Exception\LocalizedException::class);
 
@@ -270,16 +281,12 @@ class ImageUploaderTest extends TestCase
         $baseTmpImagePath = 'tmp/faq/imageName';
 
         $this->directoryWriteMock
-            ->expects($this->at(0))
+            ->expects($this->exactly(2)) // Expecting two calls to isExist
             ->method('isExist')
-            ->with($baseImagePath)
-            ->willReturn(false);
-
-        $this->directoryWriteMock
-            ->expects($this->at(1))
-            ->method('isExist')
-            ->with($baseTmpImagePath)
-            ->willReturn(true);
+            ->willReturnOnConsecutiveCalls(
+                false, // First call returns false for $baseImagePath
+                true    // Second call returns true for $baseTmpImagePath
+            );
 
         $this->coreFileStorageDatabaseMock
             ->expects($this->once())

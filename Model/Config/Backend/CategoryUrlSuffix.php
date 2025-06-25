@@ -35,8 +35,8 @@ class CategoryUrlSuffix extends Value
         ScopeConfigInterface $config,
         TypeListInterface $cacheTypeList,
         AbstractValidator $validator,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);

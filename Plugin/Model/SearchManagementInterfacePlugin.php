@@ -66,7 +66,7 @@ class SearchManagementInterfacePlugin
         callable $proceed,
         string $searchString,
         int $storeId,
-        int $limit = null,
+        ?int $limit = null,
         bool $findByTag = false
     ) {
         /** @var SearchQueryDataObject $searchQueryDataObject */
@@ -101,7 +101,7 @@ class SearchManagementInterfacePlugin
         callable $proceed,
         string $searchString,
         int $storeId,
-        int $limit = null
+        ?int $limit = null
     ) {
         /** @var SearchQueryDataObject $searchQueryDataObject */
         $searchQueryDataObject = $this->searchQueryDataObjectFactory

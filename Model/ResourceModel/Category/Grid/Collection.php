@@ -50,7 +50,7 @@ class Collection extends CategoryCollection implements SearchResultInterface
         $resourceModel,
         $model = Document::class,
         $connection = null,
-        AbstractDb $resource = null
+        ?AbstractDb $resource = null
     ) {
         parent::__construct(
             $entityFactory,
@@ -72,7 +72,7 @@ class Collection extends CategoryCollection implements SearchResultInterface
      * @param \Magento\Framework\Api\Search\DocumentInterface[] $items
      * @return $this
      */
-    public function setItems(array $items = null)
+    public function setItems(?array $items = null)
     {
         return $this;
     }
@@ -116,7 +116,7 @@ class Collection extends CategoryCollection implements SearchResultInterface
      * @param SearchCriteriaInterface|null $searchCriteria
      * @return $this
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(?SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
