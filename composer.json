@@ -2,7 +2,7 @@
     "name": "aheadworks/module-faq-free",
     "description": "Implements FAQ free functionality on Magento 2 store",
     "type": "magento2-module",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": [
         "proprietary"
     ],

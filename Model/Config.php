@@ -315,11 +315,11 @@ class Config
      * Get faq change frequency
      *
      * @param int $storeId
-     * @return string
+     * @return float
      */
-    public function getSitemapChangeFrequency($storeId)
+    public function getSitemapChangeFrequency(int $storeId): float
     {
-        return $this->scopeConfig->getValue(
+        return (float) $this->scopeConfig->getValue(
             self::XML_PATH_SITEMAP_CHANGEFREQ,
             ScopeInterface::SCOPE_STORE,
             $storeId
