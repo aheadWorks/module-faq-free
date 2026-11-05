@@ -110,7 +110,7 @@ class DataProvider extends AbstractDataProvider
 
         /** @var CategoryInterface|Category $category */
         foreach ($items as $category) {
-            $this->loadedData[$category->getCategoryId()] = $this->prepareFormDataForCategory($category);
+            $this->loadedData[$category->getCategoryId() ?? ''] = $this->prepareFormDataForCategory($category);
         }
 
         $id = $this->request->getParam($this->getRequestFieldName());
@@ -118,7 +118,7 @@ class DataProvider extends AbstractDataProvider
         if (!empty($data)) {
             $category = $this->collection->getNewEmptyItem();
             $category->setData($data);
-            $this->loadedData[$category->getCategoryId()] = $category->getData();
+            $this->loadedData[$category->getCategoryId() ?? ''] = $category->getData();
             $this->dataPersistor->clear('faq_category');
         } else {
             $parentId = $this->request->getParam('parent', 0);
@@ -126,11 +126,11 @@ class DataProvider extends AbstractDataProvider
             foreach ($items as $category) {
                 if ($id == $category->getId() && $parentId) {
                     $category->setParentId($parentId);
-                    $this->loadedData[$category->getCategoryId()] = $category->getData();
+                    $this->loadedData[$category->getCategoryId() ?? ''] = $category->getData();
                 }
             }
             if ($parentId = $this->request->getParam('parent', 0)) {
-                $this->loadedData[$id][CategoryInterface::PARENT_ID] = $parentId;
+                $this->loadedData[$id ?? ''][CategoryInterface::PARENT_ID] = $parentId;
             }
         }
 

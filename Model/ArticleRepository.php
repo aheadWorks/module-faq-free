@@ -84,7 +84,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     {
         try {
             $this->resource->save($article);
-            $this->instancesById[$article->getArticleId()] = $article;
+            $this->instancesById[$this->getInstanceKey($article->getArticleId())] = $article;
 
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
@@ -104,16 +104,17 @@ class ArticleRepository implements ArticleRepositoryInterface
      */
     public function getById($articleId, $forceLoad = false)
     {
-        if ($forceLoad || !isset($this->instancesById[$articleId])) {
+        $instanceKey = $this->getInstanceKey($articleId);
+        if ($forceLoad || !isset($this->instancesById[$instanceKey])) {
             /** @var Article|ArticleInterface $article */
             $article = $this->articleFactory->create();
             $this->resource->load($article, $articleId);
             if (!$article->getArticleId()) {
                 throw new NoSuchEntityException(__('FAQ Article with id "%1" does not exist.', $articleId));
             }
-            $this->instancesById[$articleId] = $article;
+            $this->instancesById[$instanceKey] = $article;
         }
-        return $this->instancesById[$articleId];
+        return $this->instancesById[$instanceKey];
     }
 
     /**
@@ -194,6 +195,17 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function deleteById($articleId)
     {
         return $this->delete($this->getById($articleId));
+    }
+
+    /**
+     * Normalize instance cache key for PHP 8.4+ (null array offsets are deprecated)
+     *
+     * @param int|string|null $articleId
+     * @return int|string
+     */
+    private function getInstanceKey($articleId)
+    {
+        return $articleId ?? '';
     }
 
     /**

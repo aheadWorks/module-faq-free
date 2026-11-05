@@ -71,7 +71,7 @@ class FaqArticles extends AbstractModifier
             $articles = [];
         }
 
-        $data[$product->getId()][self::DATA_SOURCE_DEFAULT][ProductAttributeInterface::CODE_AW_FAQ_ARTICLES] =
+        $data[$product->getId() ?? ''][self::DATA_SOURCE_DEFAULT][ProductAttributeInterface::CODE_AW_FAQ_ARTICLES] =
             $this->convertArticlesToArray($articles);
 
         return $data;

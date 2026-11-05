@@ -5,7 +5,7 @@
             <label>Aheadworks Extensions</label>
         </tab>
         <section id="faq" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-            <class>separator-top</class>
+            <class>separator-top aw_faq_free-icon</class>
             <label>FAQ Free</label>
             <tab>aheadworks</tab>
             <resource>Aheadworks_FaqFree::config_faq</resource>

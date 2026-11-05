@@ -108,7 +108,7 @@ class TagRepository implements TagRepositoryInterface
         try {
             $this->resource->save($tag);
             $id = $tag->getId();
-            $this->registry[$id] = $tag;
+            $this->registry[$this->getRegistryKey($id)] = $tag;
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__($exception->getMessage()));
         }
@@ -124,15 +124,16 @@ class TagRepository implements TagRepositoryInterface
      */
     public function get($id)
     {
-        if (!isset($this->registry[$id])) {
+        $registryKey = $this->getRegistryKey($id);
+        if (!isset($this->registry[$registryKey])) {
             $tag = $this->tagFactory->create();
             $this->resource->load($tag, $id);
             if (!$tag->getId()) {
                 throw NoSuchEntityException::singleField(TagInterface::ID, $id);
             }
-            $this->registry[$id] = $tag;
+            $this->registry[$registryKey] = $tag;
         }
-        return $this->registry[$id];
+        return $this->registry[$registryKey];
     }
 
     /**
@@ -146,8 +147,9 @@ class TagRepository implements TagRepositoryInterface
         try {
             $tagId = $tag->getId();
             $this->resource->delete($tag);
-            if (isset($this->registry[$tagId])) {
-                unset($this->registry[$tagId]);
+            $registryKey = $this->getRegistryKey($tagId);
+            if (isset($this->registry[$registryKey])) {
+                unset($this->registry[$registryKey]);
             }
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));
@@ -194,6 +196,17 @@ class TagRepository implements TagRepositoryInterface
             ->setItems($tags);
 
         return $searchResults;
+    }
+
+    /**
+     * Normalize registry cache key for PHP 8.4+ (null array offsets are deprecated)
+     *
+     * @param int|string|null $id
+     * @return int|string
+     */
+    private function getRegistryKey($id)
+    {
+        return $id ?? '';
     }
 
     /**

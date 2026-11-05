@@ -81,14 +81,14 @@ class DataProvider extends AbstractDataProvider
          */
         foreach ($items as $article) {
             $loadedData = $article->getData();
-            $this->loadedData[$article->getArticleId()] = $loadedData;
+            $this->loadedData[$article->getArticleId() ?? ''] = $loadedData;
         }
 
         $data = $this->dataPersistor->get('faq_article');
         if (!empty($data)) {
             $article = $this->collection->getNewEmptyItem();
             $article->setData($data);
-            $this->loadedData[$article->getArticleId()] = $article->getData();
+            $this->loadedData[$article->getArticleId() ?? ''] = $article->getData();
             $this->dataPersistor->clear('faq_article');
         }
 

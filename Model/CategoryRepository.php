@@ -100,7 +100,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         try {
             $this->resource->save($category);
-            $this->instancesById[$category->getCategoryId()] = $category;
+            $this->instancesById[$this->getInstanceKey($category->getCategoryId())] = $category;
 
             if ($category->getCategoryIcon()) {
                 $category->setCategoryIcon($this->imageUploader->moveFileFromTmp($category->getCategoryIcon()));
@@ -130,16 +130,17 @@ class CategoryRepository implements CategoryRepositoryInterface
      */
     public function getById($categoryId, $forceLoad = false)
     {
-        if ($forceLoad || !isset($this->instancesById[$categoryId])) {
+        $instanceKey = $this->getInstanceKey($categoryId);
+        if ($forceLoad || !isset($this->instancesById[$instanceKey])) {
             /** @var Category|CategoryInterface $category */
             $category = $this->categoryFactory->create();
             $this->resource->load($category, $categoryId);
             if (!$category->getCategoryId()) {
                 throw new NoSuchEntityException(__('FAQ Category with id "%1" does not exist.', $categoryId));
             }
-            $this->instancesById[$categoryId] = $category;
+            $this->instancesById[$instanceKey] = $category;
         }
-        return $this->instancesById[$categoryId];
+        return $this->instancesById[$instanceKey];
     }
 
     /**
@@ -221,6 +222,17 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $this->removeAllChild($categoryId);
         return $this->delete($this->getById($categoryId));
+    }
+
+    /**
+     * Normalize instance cache key for PHP 8.4+ (null array offsets are deprecated)
+     *
+     * @param int|string|null $categoryId
+     * @return int|string
+     */
+    private function getInstanceKey($categoryId)
+    {
+        return $categoryId ?? '';
     }
 
     /**

@@ -11,6 +11,7 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -262,10 +263,8 @@ class UrlTest extends TestCase
      * @param string $articleUrlKey
      * @dataProvider getArticleUrlDataProvider
      * @covers  Url::getArticleUrl
-     * @depends testGetBaseUrl
-     * @depends testGetCategoryRoute
-     * @depends testGetCategoryUrl
      */
+    #[DataProvider('getArticleUrlDataProvider')]
     public function testGetArticleUrl($isArticleCategoryEnabled, $expectedArticleUrl, $categoryUrlKey, $articleUrlKey)
     {
         $categoryId = 3;
@@ -319,7 +318,7 @@ class UrlTest extends TestCase
     /**
      * @return array[]
      */
-    public function getArticleUrlDataProvider()
+    public static function getArticleUrlDataProvider(): array
     {
         return [
             [
@@ -333,7 +332,7 @@ class UrlTest extends TestCase
                 'faq_route/article_url_key',
                 'category_url_key',
                 'article_url_key',
-            ]
+            ],
         ];
     }
 
