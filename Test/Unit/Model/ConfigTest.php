@@ -152,4 +152,20 @@ class ConfigTest extends TestCase
 
         $this->assertEquals($resultArray, $this->configObject->getFaqGroups());
     }
+
+    /**
+     * Get faq sitemap change frequency
+     *
+     * @covers Config::getSitemapChangeFrequency
+     */
+    public function testGetSitemapChangeFrequency()
+    {
+        $this->configMock
+            ->expects($this->once())
+            ->method('getValue')
+            ->with('sitemap/aw_faq/changefreq', 'store', 1)
+            ->willReturn('weekly');
+
+        $this->assertSame('weekly', $this->configObject->getSitemapChangeFrequency(1));
+    }
 }
