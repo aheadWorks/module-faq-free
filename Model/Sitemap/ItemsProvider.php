@@ -155,9 +155,9 @@ class ItemsProvider
      * Get change frequency
      *
      * @param int $storeId
-     * @return float
+     * @return string
      */
-    private function getChangeFreq(int $storeId): float
+    private function getChangeFreq(int $storeId): string
     {
         return $this->config->getSitemapChangeFrequency($storeId);
     }
