@@ -5,6 +5,7 @@ namespace Aheadworks\FaqFree\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Aheadworks\FaqFree\Model\Flag;
+use Magento\Framework\Flag\FlagResource;
 use Psr\Log\LoggerInterface;
 
 class SetFlagModuleWasInstalled implements DataPatchInterface
@@ -12,10 +13,12 @@ class SetFlagModuleWasInstalled implements DataPatchInterface
     /**
      * @param LoggerInterface $logger
      * @param Flag $flag
+     * @param FlagResource $flagResource
      */
     public function __construct(
         private readonly LoggerInterface $logger,
-        private readonly Flag $flag
+        private readonly Flag $flag,
+        private readonly FlagResource $flagResource
     ) {
     }
 
@@ -31,8 +34,8 @@ class SetFlagModuleWasInstalled implements DataPatchInterface
                 ->unsetData()
                 ->setFlag(Flag::AW_FAQFREE_WAS_INSTALLED)
                 ->loadSelf()
-                ->setFlagData(1)
-                ->save();
+                ->setFlagData(1);
+            $this->flagResource->save($this->flag);
         } catch (\Exception $e) {
             $this->logger->critical($e);
         }
